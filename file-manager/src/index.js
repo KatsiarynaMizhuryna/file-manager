@@ -13,6 +13,7 @@ import { getCPUs } from "./handlers/getCPUs.js";
 import { getHomeDir } from "./handlers/getHomeDirectory.js";
 import { getUsername } from "./handlers/getUsername.js";
 import { getArchitecture } from "./handlers/getArchitecture.js";
+import { calculateHash } from "./handlers/calculateHash.js";
 
 const args = process.argv.slice(2);
 const usernameArgIndex = args.indexOf("--username");
@@ -100,6 +101,9 @@ const processCommand = (command) => {
           getArchitecture();
           break;
       }
+      break;
+    case "hash":
+      calculateHash(args[0]);
       break;
 
     default:
