@@ -8,6 +8,11 @@ import { cat } from "./handlers/readFile.js";
 import { rename } from "./handlers/renameFile.js";
 import { move } from "./handlers/moveFile.js";
 import { deleteFile } from "./handlers/deleteFile.js";
+import { getEOL } from "./handlers/getEOL.js";
+import { getCPUs } from "./handlers/getCPUs.js";
+import { getHomeDir } from "./handlers/getHomeDirectory.js";
+import { getUsername } from "./handlers/getUsername.js";
+import { getArchitecture } from "./handlers/getArchitecture.js";
 
 const args = process.argv.slice(2);
 const usernameArgIndex = args.indexOf("--username");
@@ -56,20 +61,10 @@ const processCommand = (command) => {
       updateCurrentDirectory();
       break;
     case "cd":
-      if (args.length === 1) {
-        currentDirectory = changeDirectory(args[0], currentDirectory);
-      } else {
-        console.log("Invalid input. Please provide a directory path.");
-      }
+      currentDirectory = changeDirectory(args[0], currentDirectory);
       break;
     case "cp":
-      if (args.length === 2) {
-        copyFile(args[0], args[1]);
-      } else {
-        console.log(
-          "Invalid input. Please provide source and destination paths."
-        );
-      }
+      copyFile(args[0], args[1]);
       break;
     case "ls":
       ls();
@@ -87,6 +82,26 @@ const processCommand = (command) => {
     case "rm":
       deleteFile(args[0]);
       break;
+    case "os":
+      switch (args[0].slice(2).toLowerCase()) {
+        case "eol":
+          getEOL();
+          break;
+        case "cpus":
+          getCPUs();
+          break;
+        case "homedir":
+          getHomeDir();
+          break;
+        case "username":
+          getUsername();
+          break;
+        case "architecture":
+          getArchitecture();
+          break;
+      }
+      break;
+
     default:
       console.log("Invalid input. Please enter a valid command.");
   }
