@@ -5,6 +5,7 @@ import { goUp } from "./handlers/up.js";
 import { changeDirectory } from "./handlers/changeDirectory.js";
 import { ls } from "./handlers/list.js";
 import { cat } from "./handlers/readFile.js";
+import { rename } from "./handlers/renameFile.js";
 
 const args = process.argv.slice(2);
 const usernameArgIndex = args.indexOf("--username");
@@ -75,6 +76,9 @@ const processCommand = (command) => {
       break;
     case "cat":
       cat(args[0], currentDirectory);
+      break;
+    case "rn":
+      rename(args[0], args[1]);
       break;
 
     default:
