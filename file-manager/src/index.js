@@ -14,6 +14,8 @@ import { getHomeDir } from "./handlers/getHomeDirectory.js";
 import { getUsername } from "./handlers/getUsername.js";
 import { getArchitecture } from "./handlers/getArchitecture.js";
 import { calculateHash } from "./handlers/calculateHash.js";
+import { compress } from "./handlers/compressFile.js";
+import { decompress } from "./handlers/decompressFile.js";
 
 const args = process.argv.slice(2);
 const usernameArgIndex = args.indexOf("--username");
@@ -104,6 +106,12 @@ const processCommand = (command) => {
       break;
     case "hash":
       calculateHash(args[0]);
+      break;
+    case "compress":
+      compress(args[0], args[1]);
+      break;
+    case "decompress":
+      decompress(args[0], args[1]);
       break;
 
     default:
