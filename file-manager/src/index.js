@@ -62,8 +62,7 @@ const processCommand = (command) => {
       break;
     case "cp":
       if (args.length === 2) {
-        const [sourcePath, destinationPath] = args;
-        copyFile(sourcePath, destinationPath);
+        copyFile(args[0], args[1]);
       } else {
         console.log(
           "Invalid input. Please provide source and destination paths."
