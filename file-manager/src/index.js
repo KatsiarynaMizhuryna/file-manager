@@ -6,6 +6,8 @@ import { changeDirectory } from "./handlers/changeDirectory.js";
 import { ls } from "./handlers/list.js";
 import { cat } from "./handlers/readFile.js";
 import { rename } from "./handlers/renameFile.js";
+import { move } from "./handlers/moveFile.js";
+import { deleteFile } from "./handlers/deleteFile.js";
 
 const args = process.argv.slice(2);
 const usernameArgIndex = args.indexOf("--username");
@@ -79,7 +81,12 @@ const processCommand = (command) => {
     case "rn":
       rename(args[0], args[1]);
       break;
-
+    case "mv":
+      move(args[0], args[1]);
+      break;
+    case "rm":
+      deleteFile(args[0]);
+      break;
     default:
       console.log("Invalid input. Please enter a valid command.");
   }
