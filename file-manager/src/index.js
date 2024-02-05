@@ -4,6 +4,7 @@ import { copyFile } from "./handlers/copyFile.js";
 import { goUp } from "./handlers/up.js";
 import { changeDirectory } from "./handlers/changeDirectory.js";
 import { ls } from "./handlers/list.js";
+import { cat } from "./handlers/readFile.js";
 
 const args = process.argv.slice(2);
 const usernameArgIndex = args.indexOf("--username");
@@ -53,8 +54,7 @@ const processCommand = (command) => {
       break;
     case "cd":
       if (args.length === 1) {
-        const directoryPath = args[0];
-        currentDirectory = changeDirectory(directoryPath, currentDirectory);
+        currentDirectory = changeDirectory(args[0], currentDirectory);
       } else {
         console.log("Invalid input. Please provide a directory path.");
       }
@@ -72,6 +72,9 @@ const processCommand = (command) => {
     case "ls":
       ls();
       updateCurrentDirectory();
+      break;
+    case "cat":
+      cat(args[0], currentDirectory);
       break;
 
     default:
