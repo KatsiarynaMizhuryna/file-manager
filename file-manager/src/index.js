@@ -1,5 +1,9 @@
 import { createInterface } from "readline";
 import { cwd } from "process";
+import { copyFile } from "./handlers/copyFile.js";
+import { goUp } from "./handlers/up.js";
+import { changeDirectory } from "./handlers/changeDirectory.js";
+import { ls } from "./handlers/list.js";
 
 const args = process.argv.slice(2);
 const usernameArgIndex = args.indexOf("--username");
@@ -29,14 +33,50 @@ const promptUser = () => {
   });
 };
 
+const updateCurrentDirectory = () => {
+  currentDirectory = cwd();
+  console.log(`You are currently in ${currentDirectory}`);
+};
+
 const processCommand = (command) => {
-  if (command === ".exit") {
-    exitHandler();
+  const [cmd, ...args] = command.split(" ");
+  switch (cmd) {
+    case ".exit":
+      process.exit();
+    case "pwd":
+      console.log(cmd);
+      console.log(`You are currently in ${currentDirectory}`);
+      break;
+    case "up":
+      goUp();
+      updateCurrentDirectory();
+      break;
+    case "cd":
+      if (args.length === 1) {
+        const directoryPath = args[0];
+        currentDirectory = changeDirectory(directoryPath, currentDirectory);
+      } else {
+        console.log("Invalid input. Please provide a directory path.");
+      }
+      break;
+    case "cp":
+      if (args.length === 2) {
+        const [sourcePath, destinationPath] = args;
+        copyFile(sourcePath, destinationPath);
+      } else {
+        console.log(
+          "Invalid input. Please provide source and destination paths."
+        );
+      }
+      break;
+    case "ls":
+      ls();
+      updateCurrentDirectory();
+      break;
+
+    default:
+      console.log("Invalid input. Please enter a valid command.");
   }
-  if (command === "pwd") {
-    console.log(`You are currently in ${currentDirectory}`);
-  }
-  console.log("Invalid input. Please enter a valid command.");
 };
 
 promptUser();
