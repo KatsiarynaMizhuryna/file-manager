@@ -57,7 +57,7 @@ const processCommand = (command) => {
       process.exit();
     case "pwd":
       console.log(cmd);
-      console.log(`You are currently in ${currentDirectory}`);
+      updateCurrentDirectory();
       break;
     case "up":
       goUp();
@@ -65,9 +65,11 @@ const processCommand = (command) => {
       break;
     case "cd":
       currentDirectory = changeDirectory(args[0], currentDirectory);
+      updateCurrentDirectory();
       break;
     case "cp":
       copyFile(args[0], args[1]);
+      updateCurrentDirectory();
       break;
     case "ls":
       ls();
@@ -75,43 +77,55 @@ const processCommand = (command) => {
       break;
     case "cat":
       cat(args[0], currentDirectory);
+      updateCurrentDirectory();
       break;
     case "rn":
       rename(args[0], args[1]);
+      updateCurrentDirectory();
       break;
     case "mv":
       move(args[0], args[1]);
+      updateCurrentDirectory();
       break;
     case "rm":
       deleteFile(args[0]);
+      updateCurrentDirectory();
       break;
     case "os":
       switch (args[0].slice(2).toLowerCase()) {
         case "eol":
           getEOL();
+          updateCurrentDirectory();
           break;
         case "cpus":
           getCPUs();
+          updateCurrentDirectory();
           break;
         case "homedir":
           getHomeDir();
+          updateCurrentDirectory();
           break;
         case "username":
           getUsername();
+          updateCurrentDirectory();
           break;
         case "architecture":
           getArchitecture();
+          updateCurrentDirectory();
           break;
       }
       break;
     case "hash":
       calculateHash(args[0]);
+      updateCurrentDirectory();
       break;
     case "compress":
       compress(args[0], args[1]);
+      updateCurrentDirectory();
       break;
     case "decompress":
       decompress(args[0], args[1]);
+      updateCurrentDirectory();
       break;
 
     default:
