@@ -16,6 +16,7 @@ import { getArchitecture } from "./handlers/getArchitecture.js";
 import { calculateHash } from "./handlers/calculateHash.js";
 import { compress } from "./handlers/compressFile.js";
 import { decompress } from "./handlers/decompressFile.js";
+import { createFile } from "./handlers/createFile.js";
 
 const args = process.argv.slice(2);
 const usernameArgIndex = args.indexOf("--username");
@@ -77,6 +78,10 @@ const processCommand = (command) => {
       break;
     case "cat":
       cat(args[0], currentDirectory);
+      updateCurrentDirectory();
+      break;
+    case "add":
+      createFile(args[0]);
       updateCurrentDirectory();
       break;
     case "rn":
